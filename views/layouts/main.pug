@@ -362,4 +362,42 @@ html(lang="en")
         document.querySelectorAll('.fade-up').forEach(function(el) {
           observer.observe(el);
         });
+
+        // Fetch testimonials from API
+        fetch('/api/testimonials/latest')
+          .then(function(response) { return response.json(); })
+          .then(function(result) {
+            if (result.success && result.data && result.data.length > 0) {
+              var container = document.getElementById('testimonials-container');
+              if (container) {
+                container.innerHTML = '';
+                result.data.forEach(function(testimony) {
+                  var stars = '';
+                  for (var i = 0; i < testimony.rating; i++) {
+                    stars += '<i class="bi bi-star-fill"></i>';
+                  }
+                  
+                  var card = document.createElement('div');
+                  card.className = 'col-lg-4 col-md-6 fade-up';
+                  card.innerHTML = 
+                    '<div class="testimonial-card">' +
+                      '<div class="testimonial-stars">' + stars + '</div>' +
+                      '<p class="testimonial-text">"' + testimony.content + '"</p>' +
+                      '<div class="d-flex align-items-center">' +
+                        '<div class="testimonial-avatar">' + testimony.avatar + '</div>' +
+                        '<div class="ms-3">' +
+                          '<h6 class="mb-0" style="font-size:0.95rem;">' + testimony.name + '</h6>' +
+                          '<small class="text-muted">' + testimony.position + '</small>' +
+                        '</div>' +
+                      '</div>' +
+                    '</div>';
+                  container.appendChild(card);
+                  observer.observe(card);
+                });
+              }
+            }
+          })
+          .catch(function(error) {
+            console.error('Failed to load testimonials:', error);
+          });
       });

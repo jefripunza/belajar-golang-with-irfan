@@ -5,6 +5,8 @@ import (
 	"log"
 	"net/http"
 
+	_ "belajar-golang-uhuy/database"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
 	"github.com/gofiber/fiber/v2/middleware/cors"
