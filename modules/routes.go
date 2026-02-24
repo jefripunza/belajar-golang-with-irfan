@@ -7,5 +7,5 @@ import (
 )
 
 func Routes(app *fiber.App) {
-	example.Route(app)
+	example.Route(app) // aku ngubah disini
 }

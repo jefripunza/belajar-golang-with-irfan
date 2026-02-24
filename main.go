@@ -17,7 +17,7 @@ func main() {
 	engine := pug.NewFileSystem(http.Dir("./views"), ".pug")
 
 	app := fiber.New(fiber.Config{
-		AppName: "Belajar Golang", // halo gaes
+		AppName: "Belajar Golang", // halo pan
 		Views:   engine,
 	})
 
