@@ -7,7 +7,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func Routes(app *fiber.App) {
+func Routes(app fiber.Router) {
+	api := app.Group("/api")
+
 	example.Route(app)
-	testimony.Route(app)
+	testimony.Route(api.Group("/testimony"))
 }
