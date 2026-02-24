@@ -7,5 +7,5 @@ import (
 )
 
 func Routes(app *fiber.App) {
-	example.Route(app) // aku ngubah Irfan jadi example, biar lebih umum, soalnya nanti bisa buat route lain juga
+	example.Route(app) // aku ngubah Irfan, tp nggak jadi
 }
