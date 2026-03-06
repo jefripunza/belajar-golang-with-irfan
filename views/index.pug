@@ -7,7 +7,7 @@ section.hero-section#home
       .col-lg-6
         .position-relative(style="z-index:1")
           span.hero-badge
-            i.bi.bi-lightning-charge-fill.me-1
+            i(class="bi bi-lightning-charge-fill me-1")
             | High Performance Framework
           h1 Build Blazing Fast Apps with
             span(style="background:linear-gradient(135deg,#818cf8,#0ea5e9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;")  Go Fiber
@@ -31,64 +31,64 @@ section.hero-section#home
               span(style="color:#94a3b8;font-size:0.9rem;") Production Ready
       .col-lg-6
         .hero-image-wrapper
-          .hero-code-block
-            .d-flex.align-items-center.mb-3
-              span(style="width:12px;height:12px;border-radius:50%;background:#ef4444;display:inline-block;margin-right:8px;")
-              span(style="width:12px;height:12px;border-radius:50%;background:#f59e0b;display:inline-block;margin-right:8px;")
-              span(style="width:12px;height:12px;border-radius:50%;background:#22c55e;display:inline-block;margin-right:8px;")
-              span(style="color:#64748b;font-size:0.8rem;margin-left:8px;") main.go
-            div
-              span.code-keyword package
-              |  main
-            br
-            div
-              span.code-keyword import
-              |  (
-            div
-              |   &nbsp;&nbsp;
-              span.code-string "github.com/gofiber/fiber/v2"
-            div
-              | )
-            br
-            div
-              span.code-keyword func
-              |  
-              span.code-func main
-              | () {
-            div
-              |   &nbsp;&nbsp;app := fiber.
-              span.code-func New
-              | ()
-            br
-            div
-              |   &nbsp;&nbsp;app.
-              span.code-func Get
-              | (
-              span.code-string "/"
-              | , 
-              span.code-keyword func
-              | (c *fiber.Ctx) 
-              span.code-keyword error
-              |  {
-            div
-              |   &nbsp;&nbsp;&nbsp;&nbsp;
-              span.code-keyword return
-              |  c.
-              span.code-func SendString
-              | (
-              span.code-string "Hello, World!"
-              | )
-            div
-              |   &nbsp;&nbsp;})
-            br
-            div
-              |   &nbsp;&nbsp;app.
-              span.code-func Listen
-              | (
-              span.code-string ":3000"
-              | )
-            div
-              | }
+          //- .hero-code-block
+          //-   .d-flex.align-items-center.mb-3
+          //-     span(style="width:12px;height:12px;border-radius:50%;background:#ef4444;display:inline-block;margin-right:8px;")
+          //-     span(style="width:12px;height:12px;border-radius:50%;background:#f59e0b;display:inline-block;margin-right:8px;")
+          //-     span(style="width:12px;height:12px;border-radius:50%;background:#22c55e;display:inline-block;margin-right:8px;")
+          //-     span(style="color:#64748b;font-size:0.8rem;margin-left:8px;") main.go
+          //-   div
+          //-     span.code-keyword package
+          //-     |  main
+          //-   br
+          //-   div
+          //-     span.code-keyword import
+          //-     |  (
+          //-   div
+          //-     |   &nbsp;&nbsp;
+          //-     span.code-string "github.com/gofiber/fiber/v2"
+          //-   div
+          //-     | )
+          //-   br
+          //-   div
+          //-     span.code-keyword func
+          //-     |  
+          //-     span.code-func main
+          //-     | () {
+          //-   div
+          //-     |   &nbsp;&nbsp;app := fiber.
+          //-     span.code-func New
+          //-     | ()
+          //-   br
+          //-   div
+          //-     |   &nbsp;&nbsp;app.
+          //-     span.code-func Get
+          //-     | (
+          //-     span.code-string "/"
+          //-     | , 
+          //-     span.code-keyword func
+          //-     | (c *fiber.Ctx) 
+          //-     span.code-keyword error
+          //-     |  {
+          //-   div
+          //-     |   &nbsp;&nbsp;&nbsp;&nbsp;
+          //-     span.code-keyword return
+          //-     |  c.
+          //-     span.code-func SendString
+          //-     | (
+          //-     span.code-string "Hello, World!"
+          //-     | )
+          //-   div
+          //-     |   &nbsp;&nbsp;})
+          //-   br
+          //-   div
+          //-     |   &nbsp;&nbsp;app.
+          //-     span.code-func Listen
+          //-     | (
+          //-     span.code-string ":3000"
+          //-     | )
+          //-   div
+          //-     | }
 
 //- Features Section
 section.features-section#features
@@ -223,54 +223,46 @@ section.cta-section#contact
             i.bi.bi-book.me-2
             | Read the Docs
 
-script.
-  document.addEventListener('DOMContentLoaded', function() {
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    // Fetch testimonials from API
-    fetch('/api/testimony/latest')
-      .then(function(response) { return response.json(); })
-      .then(function(result) {
-        if (result.success && result.data && result.data.length > 0) {
-          var container = document.getElementById('testimonials-container');
-          if (container) {
-            container.innerHTML = '';
-            result.data.forEach(function(testimony) {
-              var stars = '';
-              for (var i = 0; i < testimony.rating; i++) {
-                stars += '<i class="bi bi-star-fill"></i>';
-              }
-              
-              var card = document.createElement('div');
-              card.className = 'col-lg-4 col-md-6 fade-up';
-              card.innerHTML = 
-                '<div class="testimonial-card">' +
-                  '<div class="testimonial-stars">' + stars + '</div>' +
-                  '<p class="testimonial-text">"' + testimony.content + '"</p>' +
-                  '<div class="d-flex align-items-center">' +
-                    '<div class="testimonial-avatar">' + testimony.avatar + '</div>' +
-                    '<div class="ms-3">' +
-                      '<h6 class="mb-0" style="font-size:0.95rem;">' + testimony.name + '</h6>' +
-                      '<small class="text-muted">' + testimony.position + '</small>' +
-                    '</div>' +
-                  '</div>' +
-                '</div>';
-              container.appendChild(card);
-              observer.observe(card);
-            });
-          }
-        }
-      })
-      .catch(function(error) {
-        console.error('Failed to load testimonials:', error);
-      });
-  });
+script(type="text/javascript")
+  | document.addEventListener('DOMContentLoaded', function() {
+  |   var observer = new IntersectionObserver(function(entries) {
+  |     entries.forEach(function(entry) {
+  |       if (entry.isIntersecting) {
+  |         entry.target.classList.add('visible');
+  |       }
+  |     });
+  |   }, { threshold: 0.1 });
+  |
+  |   fetch('/api/testimony/latest')
+  |     .then(function(response) { return response.json(); })
+  |     .then(function(result) {
+  |       if (result.success && result.data && result.data.length > 0) {
+  |         var container = document.getElementById('testimonials-container');
+  |         if (container) {
+  |           container.innerHTML = '';
+  |           result.data.forEach(function(testimony) {
+  |             var stars = '';
+  |             for (var i = 0; i < testimony.rating; i++) {
+  |               stars += '<i class="bi bi-star-fill"></i>';
+  |             }
+  |
+  |             var card = document.createElement('div');
+  |             card.className = 'col-lg-4 col-md-6 fade-up';
+  |             card.innerHTML =
+  |               '<div class="testimonial-card">' +
+  |               '<div class="testimonial-stars">' + stars + '</div>' +
+  |               '</div>';
+  |
+  |             container.appendChild(card);
+  |             observer.observe(card);
+  |           });
+  |         }
+  |       }
+  |     })
+  |     .catch(function(error) {
+  |       console.error('Failed to load testimonials:', error);
+  |     });
+  | });
 
 
 include partials/footer.pug
