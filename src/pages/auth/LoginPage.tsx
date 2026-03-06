@@ -6,7 +6,7 @@ import type { AxiosError } from "axios";
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(false);
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -18,12 +18,12 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const token = await login({ email, password });
+      const token = await login({ username, password });
 
       // Simpan token (sesuaikan storage strategy dengan kebutuhan project)
       localStorage.setItem("token", token);
 
-      navigate("/dashboard"); // sesuaikan redirect tujuan
+      navigate("/app"); // sesuaikan redirect tujuan
     } catch (err) {
       const axiosError = err as AxiosError<{ message?: string }>;
       const message =
@@ -76,15 +76,15 @@ export default function LoginPage() {
           {/* Email */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              Email Address
+              Username
             </label>
             <div className="relative">
               <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">📧</span>
               <input
-                type="email"
-                placeholder="john@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                placeholder="Enter your username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl text-sm text-gray-800 placeholder-gray-300 focus:outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 transition-all"
               />
             </div>
