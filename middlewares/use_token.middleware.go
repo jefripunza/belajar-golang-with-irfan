@@ -1,7 +1,6 @@
 package middlewares
 
 import (
-	"context"
 	"strings"
 
 	"belajar-golang-uhuy/dto"
@@ -38,7 +37,6 @@ func UseToken(c *fiber.Ctx) error {
 	if errMsg != "" {
 		return dto.Unauthorized(c, errMsg, nil)
 	}
-	ctx := context.WithValue(c.UserContext(), ClaimsContextKey, claims)
-	c.SetUserContext(ctx)
+	c.Locals(string(ClaimsContextKey), claims)
 	return c.Next()
 }

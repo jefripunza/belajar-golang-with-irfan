@@ -27,6 +27,23 @@ func Register(c *fiber.Ctx) error {
 		return dto.BadRequest(c, "Name, username and password are required", nil)
 	}
 
+	// check username already exist
+	var user_exist user.User
+	if err := variable.Db.Where("username = ?", req.Username).First(&user_exist).Error; err == nil {
+		return dto.BadRequest(c, "Username already exist", nil)
+	}
+
+	// create user
+	user := user.User{
+		Name:     req.Name,
+		Username: req.Username,
+		Password: function.EncryptPassword(req.Password),
+		Role:     user.RoleUser,
+	}
+	if err := variable.Db.Create(&user).Error; err != nil {
+		return dto.InternalServerError(c, "Failed to create user", nil)
+	}
+
 	return dto.OK(c, "Register success", nil)
 }
 

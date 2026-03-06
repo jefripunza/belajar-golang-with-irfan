@@ -1,16 +1,15 @@
 package auth
 
 import (
-	"belajar-golang-uhuy/middlewares"
-
 	"github.com/gofiber/fiber/v2"
 )
 
-func RegisterPublicRoutes(r fiber.Router) {
+func PublicRoute(r fiber.Router) {
+	r.Post("/register", Register)
 	r.Post("/login", Login)
-	r.Delete("/logout", middlewares.UseToken, Logout)
 }
 
-func RegisterProtectedRoutes(r fiber.Router) {
-	r.Get("/validate", middlewares.UseToken, Validate)
+func ProtectedRoute(r fiber.Router) {
+	r.Delete("/logout", Logout)
+	r.Get("/validate", Validate)
 }

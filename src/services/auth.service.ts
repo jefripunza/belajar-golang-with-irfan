@@ -1,7 +1,15 @@
 import satellite from "@/lib/satellite";
-import type { IAuthLogin } from "@/types/auth";
+import type { IAuthLogin, IAuthRegister } from "@/types/auth";
 import type { Response } from "@/types/response";
 import type { JwtClaims } from "@/types/user";
+
+export const register = async (data: IAuthRegister) => {
+  const response = await satellite.post<Response<void>>(
+    "/api/auth/register",
+    data,
+  );
+  return response.data;
+};
 
 export const login = async (data: IAuthLogin) => {
   const response = await satellite.post<Response<{ token: string }>>(
