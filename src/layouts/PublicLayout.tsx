@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Outlet, NavLink } from "react-router";
 
-export default function AppLayout() {
+export default function PublicLayout() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const navLinks = [
@@ -49,7 +49,10 @@ export default function AppLayout() {
 
             {/* CTA */}
             <div className="hidden md:flex items-center gap-3">
-              <NavLink to="/contact" className="px-4 py-2 text-sm font-medium text-violet-600 hover:text-violet-700">
+              <NavLink
+                to="/auth/login"
+                className="px-4 py-2 text-sm font-medium text-violet-600 hover:text-violet-700"
+              >
                 Sign In
               </NavLink>
               <NavLink
@@ -65,11 +68,26 @@ export default function AppLayout() {
               onClick={() => setMenuOpen(!menuOpen)}
               className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 {menuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 )}
               </svg>
             </button>
@@ -87,7 +105,9 @@ export default function AppLayout() {
                 onClick={() => setMenuOpen(false)}
                 className={({ isActive }) =>
                   `block px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                    isActive ? "bg-violet-50 text-violet-700" : "text-gray-600 hover:bg-gray-50"
+                    isActive
+                      ? "bg-violet-50 text-violet-700"
+                      : "text-gray-600 hover:bg-gray-50"
                   }`
                 }
               >
@@ -114,15 +134,22 @@ export default function AppLayout() {
               <span className="text-white font-bold text-lg">Nexora</span>
             </div>
             <p className="text-sm leading-relaxed max-w-xs">
-              Building the future with modern technology and elegant design solutions.
+              Building the future with modern technology and elegant design
+              solutions.
             </p>
           </div>
           <div>
             <h4 className="text-white font-semibold mb-3 text-sm">Pages</h4>
             <ul className="space-y-2 text-sm">
-              {["About", "Services", "Portfolio", "Blog", "Contact"].map((item) => (
-                <li key={item}><a href="#" className="hover:text-white transition-colors">{item}</a></li>
-              ))}
+              {["About", "Services", "Portfolio", "Blog", "Contact"].map(
+                (item) => (
+                  <li key={item}>
+                    <a href="#" className="hover:text-white transition-colors">
+                      {item}
+                    </a>
+                  </li>
+                ),
+              )}
             </ul>
           </div>
           <div>

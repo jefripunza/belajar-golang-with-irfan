@@ -5,27 +5,43 @@ import { RouterProvider } from "react-router/dom";
 import "@/index.css";
 
 // Layouts
-import AppLayout from "@/layouts/AppLayout";
+import PublicLayout from "@/layouts/PublicLayout";
 
 // Pages
 import AppPage from "@/pages/HomePage";
 import AboutPage from "@/pages/AboutPage";
-import PlaceholderPage from "@/pages/PlaceholderPage";
+import ServicesPage from "@/pages/ServicesPage";
+import PortfolioPage from "@/pages/PortfolioPage";
+import BlogPage from "./pages/BlogPage";
+import ContactPage from "./pages/ContactPage";
 
 // Error
 import NotFoundPage from "@/pages/error/NotFoundPage";
+import AuthLayout from "./layouts/AuthLayout";
+import LoginPage from "./pages/auth/LoginPage";
+import RegisterPage from "./pages/auth/RegisterPage";
+import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <AppLayout />,
+    element: <PublicLayout />,
     children: [
       { path: "/", element: <AppPage /> },
       { path: "/about", element: <AboutPage /> },
-      { path: "/services", element: <PlaceholderPage title="Services" /> },
-      { path: "/portfolio", element: <PlaceholderPage title="Portfolio" /> },
-      { path: "/blog", element: <PlaceholderPage title="Blog" /> },
-      { path: "/contact", element: <PlaceholderPage title="Contact" /> },
+      { path: "/services", element: <ServicesPage /> },
+      { path: "/portfolio", element: <PortfolioPage /> },
+      { path: "/blog", element: <BlogPage /> },
+      { path: "/contact", element: <ContactPage /> },
+    ],
+  },
+  {
+    path: "/auth",
+    element: <AuthLayout />,
+    children: [
+      { path: "login", element: <LoginPage /> },
+      { path: "register", element: <RegisterPage /> },
+      { path: "forgot-password", element: <ForgotPasswordPage /> },
     ],
   },
   {
