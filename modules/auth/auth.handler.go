@@ -4,30 +4,30 @@ import (
 	"fmt"
 
 	"belajar-golang-uhuy/dto"
-	"belajar-golang-uhuy/environment"
 	"belajar-golang-uhuy/function"
 	"belajar-golang-uhuy/modules/user"
 	"belajar-golang-uhuy/variable"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/golang-jwt/jwt/v5"
 )
 
-func ParseToken(tokenString string) (jwt.MapClaims, error) {
-	token, err := jwt.Parse(tokenString, func(t *jwt.Token) (interface{}, error) {
-		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", t.Header["alg"])
-		}
-		return environment.GetJWTSecret(), nil
-	})
-	if err != nil {
-		return nil, err
+type RegisterRequest struct {
+	Name     string `json:"name"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+func Register(c *fiber.Ctx) error {
+	var req RegisterRequest
+	if err := c.BodyParser(&req); err != nil {
+		return dto.BadRequest(c, "Invalid request body", nil)
 	}
-	claims, ok := token.Claims.(jwt.MapClaims)
-	if !ok || !token.Valid {
-		return nil, fmt.Errorf("invalid token")
+
+	if req.Name == "" || req.Username == "" || req.Password == "" {
+		return dto.BadRequest(c, "Name, username and password are required", nil)
 	}
-	return claims, nil
+
+	return dto.OK(c, "Register success", nil)
 }
 
 type LoginRequest struct {
