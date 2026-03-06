@@ -2,6 +2,7 @@ package user
 
 import (
 	"belajar-golang-uhuy/function"
+	"time"
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
@@ -18,7 +19,7 @@ type User struct {
 	Username  string    `json:"username" gorm:"not null;unique"`
 	Password  string    `json:"password" gorm:"not null"` // hash with bcrypt
 	Role      string    `json:"role" gorm:"not null"`
-	CreatedAt string    `json:"created_at" gorm:"autoCreateTime"`
+	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime"`
 }
 
 func (s *User) BeforeCreate(tx *gorm.DB) error {

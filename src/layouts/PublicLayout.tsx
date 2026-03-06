@@ -50,7 +50,7 @@ export default function PublicLayout() {
             {/* CTA */}
             <div className="hidden md:flex items-center gap-3">
               <NavLink
-                to="/auth/login"
+                to="/login"
                 className="px-4 py-2 text-sm font-medium text-violet-600 hover:text-violet-700"
               >
                 Sign In

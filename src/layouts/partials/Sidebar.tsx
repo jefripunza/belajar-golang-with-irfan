@@ -1,4 +1,5 @@
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
+import { useAuthStore } from "@/stores/authStore";
 
 interface SidebarProps {
   collapsed: boolean;
@@ -27,13 +28,22 @@ const navGroups = [
     label: "System",
     items: [
       { to: "/app/messages", icon: "💬", label: "Messages", badge: 4 },
-      { to: "/app/notifications", icon: "🔔", label: "Notifications", badge: 12 },
+      {
+        to: "/app/notifications",
+        icon: "🔔",
+        label: "Notifications",
+        badge: 12,
+      },
       { to: "/app/settings", icon: "⚙️", label: "Settings" },
     ],
   },
 ];
 
 export default function Sidebar({ collapsed, onCollapse }: SidebarProps) {
+  const navigate = useNavigate();
+
+  const { logout } = useAuthStore();
+
   return (
     <aside
       className={`flex flex-col bg-gray-950 text-white transition-all duration-300 h-full ${
@@ -64,8 +74,18 @@ export default function Sidebar({ collapsed, onCollapse }: SidebarProps) {
             onClick={onCollapse}
             className="p-1 rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition-all"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M11 19l-7-7 7-7m8 14l-7-7 7-7"
+              />
             </svg>
           </button>
         )}
@@ -118,15 +138,27 @@ export default function Sidebar({ collapsed, onCollapse }: SidebarProps) {
             onClick={onCollapse}
             className="w-full p-2.5 rounded-xl text-gray-400 hover:bg-gray-800 hover:text-white transition-all flex items-center justify-center"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13 5l7 7-7 7M5 5l7 7-7 7"
+              />
             </svg>
           </button>
         </div>
       )}
 
       {/* User */}
-      <div className={`border-t border-gray-800 p-3 flex-shrink-0 ${collapsed ? "flex justify-center" : ""}`}>
+      <div
+        className={`border-t border-gray-800 p-3 flex-shrink-0 ${collapsed ? "flex justify-center" : ""}`}
+      >
         {collapsed ? (
           <div className="w-8 h-8 bg-gradient-to-br from-violet-500 to-indigo-500 rounded-xl flex items-center justify-center text-sm font-bold text-white">
             A
@@ -137,13 +169,22 @@ export default function Sidebar({ collapsed, onCollapse }: SidebarProps) {
               A
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-white truncate">Alice Johnson</p>
+              <p className="text-sm font-semibold text-white truncate">
+                Alice Johnson
+              </p>
               <p className="text-xs text-gray-400 truncate">alice@nexora.com</p>
             </div>
             <NavLink
               to="/logout"
               className="text-gray-500 hover:text-gray-300 transition-colors"
               title="Logout"
+              onClick={async (e) => {
+                e.preventDefault();
+                // TODO: Implement logout logic
+                console.log("Logout clicked");
+                await logout();
+                navigate("/login", { replace: true });
+              }}
             >
               Logout
             </NavLink>

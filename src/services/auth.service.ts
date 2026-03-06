@@ -16,7 +16,8 @@ export const login = async (data: IAuthLogin) => {
     "/api/auth/login",
     data,
   );
-  return response.data.data.token;
+  const token = response.data.data?.token;
+  return token ?? null;
 };
 
 export const validate = async () => {

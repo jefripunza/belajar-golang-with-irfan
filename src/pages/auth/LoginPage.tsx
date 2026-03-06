@@ -23,11 +23,12 @@ export default function LoginPage() {
       // Simpan token (sesuaikan storage strategy dengan kebutuhan project)
       localStorage.setItem("token", token);
 
-      navigate("/app"); // sesuaikan redirect tujuan
+      navigate("/app", { replace: true }); // sesuaikan redirect tujuan
     } catch (err) {
       const axiosError = err as AxiosError<{ message?: string }>;
       const message =
-        axiosError?.response?.data?.message ?? "Login failed. Please try again.";
+        axiosError?.response?.data?.message ??
+        "Login failed. Please try again.";
       setError(message);
     } finally {
       setIsLoading(false);
@@ -43,8 +44,12 @@ export default function LoginPage() {
           <div className="w-14 h-14 bg-gradient-to-br from-violet-600 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
             <span className="text-white text-2xl">👋</span>
           </div>
-          <h1 className="text-2xl font-extrabold text-gray-900">Welcome back</h1>
-          <p className="text-gray-400 text-sm mt-1">Sign in to your Nexora account</p>
+          <h1 className="text-2xl font-extrabold text-gray-900">
+            Welcome back
+          </h1>
+          <p className="text-gray-400 text-sm mt-1">
+            Sign in to your Nexora account
+          </p>
         </div>
 
         {/* Social Login */}
@@ -60,7 +65,9 @@ export default function LoginPage() {
         {/* Divider */}
         <div className="flex items-center gap-3 mb-6">
           <div className="flex-1 h-px bg-gray-100" />
-          <span className="text-xs text-gray-400 font-medium">or continue with email</span>
+          <span className="text-xs text-gray-400 font-medium">
+            or continue with email
+          </span>
           <div className="flex-1 h-px bg-gray-100" />
         </div>
 
@@ -79,7 +86,9 @@ export default function LoginPage() {
               Username
             </label>
             <div className="relative">
-              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">📧</span>
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">
+                📧
+              </span>
               <input
                 type="text"
                 placeholder="Enter your username"
@@ -93,7 +102,9 @@ export default function LoginPage() {
           {/* Password */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="text-sm font-medium text-gray-700">Password</label>
+              <label className="text-sm font-medium text-gray-700">
+                Password
+              </label>
               <NavLink
                 to="/auth/forgot-password"
                 className="text-xs text-violet-600 hover:text-violet-700 font-medium hover:underline"
@@ -102,7 +113,9 @@ export default function LoginPage() {
               </NavLink>
             </div>
             <div className="relative">
-              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">🔒</span>
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">
+                🔒
+              </span>
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
@@ -130,12 +143,24 @@ export default function LoginPage() {
               }`}
             >
               {remember && (
-                <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                <svg
+                  className="w-2.5 h-2.5 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={3}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
               )}
             </div>
-            <span className="text-sm text-gray-600">Remember me for 30 days</span>
+            <span className="text-sm text-gray-600">
+              Remember me for 30 days
+            </span>
           </label>
 
           {/* Submit */}
@@ -152,7 +177,10 @@ export default function LoginPage() {
       {/* Register Link */}
       <p className="text-center text-sm text-gray-500 mt-6">
         Don't have an account?{" "}
-        <NavLink to="/auth/register" className="text-violet-600 font-semibold hover:underline">
+        <NavLink
+          to="/auth/register"
+          className="text-violet-600 font-semibold hover:underline"
+        >
           Create one free →
         </NavLink>
       </p>
