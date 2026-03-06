@@ -21,6 +21,11 @@ import AuthLayout from "./layouts/AuthLayout";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
+import AppLayout from "./layouts/AppLayout";
+import DashboardPage from "./pages/app/DashboardPage";
+import AnalyticsPage from "./pages/app/AnalityticsPage";
+import PlaceholderPage from "./pages/PlaceholderPage";
+import SettingsPage from "./pages/app/SettingsPage";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +47,22 @@ const router = createBrowserRouter([
       { path: "login", element: <LoginPage /> },
       { path: "register", element: <RegisterPage /> },
       { path: "forgot-password", element: <ForgotPasswordPage /> },
+    ],
+  },
+  {
+    path: "/app",
+    element: <AppLayout />,
+    children: [
+      { path: "", element: <DashboardPage /> },
+      { path: "analytics", element: <AnalyticsPage /> },
+      { path: "reports", element: <PlaceholderPage title="Reports" /> },
+      { path: "projects", element: <PlaceholderPage title="Projects" /> },
+      { path: "team", element: <PlaceholderPage title="Team" /> },
+      { path: "clients", element: <PlaceholderPage title="Clients" /> },
+      { path: "invoices", element: <PlaceholderPage title="Invoices" /> },
+      { path: "messages", element: <PlaceholderPage title="Messages" /> },
+      { path: "notifications", element: <PlaceholderPage title="Notifications" /> },
+      { path: "settings", element: <SettingsPage /> },
     ],
   },
   {

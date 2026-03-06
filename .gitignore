@@ -27,5 +27,4 @@ bun.lock
 data.sqlite
 .env
 
-app
 app.exe
