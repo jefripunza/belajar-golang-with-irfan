@@ -4,6 +4,7 @@ import (
 	"belajar-golang-uhuy/modules/analytic"
 	"belajar-golang-uhuy/modules/feature"
 	"belajar-golang-uhuy/modules/testimony"
+	"belajar-golang-uhuy/modules/user"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -11,6 +12,7 @@ import (
 func Routes(app fiber.Router) {
 
 	api := app.Group("/api")
+	user.Route(api.Group("/user"))
 	testimony.Route(api.Group("/testimony"))
 	analytic.Route(api.Group("/analytic"))
 	feature.Route(api.Group("/feature"))
