@@ -14,6 +14,6 @@ func GetLatest(c *fiber.Ctx) error {
 	}
 
 	return dto.OK(c, "Success get latest testimonials", fiber.Map{
-		"data": testimonies,
+		"testimonies": testimonies,
 	})
 }

@@ -1,6 +1,7 @@
 package modules
 
 import (
+	"belajar-golang-uhuy/modules/analytic"
 	"belajar-golang-uhuy/modules/example"
 	"belajar-golang-uhuy/modules/testimony"
 
@@ -12,5 +13,6 @@ func Routes(app fiber.Router) {
 
 	api := app.Group("/api")
 	testimony.Route(api.Group("/testimony"))
+	analytic.Route(api.Group("/analytic"))
 
 }

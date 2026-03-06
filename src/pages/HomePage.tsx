@@ -1,43 +1,51 @@
-export default function HomePage() {
-  const features = [
-    {
-      icon: "⚡",
-      title: "Fast Performance",
-      desc: "Optimized for speed and efficiency across all devices.",
-    },
-    {
-      icon: "🎨",
-      title: "Beautiful Design",
-      desc: "Crafted with attention to detail and modern aesthetics.",
-    },
-    {
-      icon: "🔒",
-      title: "Secure & Reliable",
-      desc: "Enterprise-grade security with 99.9% uptime guarantee.",
-    },
-    {
-      icon: "📱",
-      title: "Fully Responsive",
-      desc: "Perfect experience on mobile, tablet, and desktop.",
-    },
-    {
-      icon: "🚀",
-      title: "Easy to Scale",
-      desc: "Grows with your business from day one.",
-    },
-    {
-      icon: "💬",
-      title: "24/7 Support",
-      desc: "Our team is always here to help you succeed.",
-    },
-  ];
+import { useEffect, useState } from "react";
+import { getAnalytic } from "@/services/analytic.service";
+import type { AnalyticStat } from "@/types/analytic";
 
-  const stats = [
-    { value: "10K+", label: "Happy Clients" },
-    { value: "99.9%", label: "Uptime" },
-    { value: "150+", label: "Countries" },
-    { value: "24/7", label: "Support" },
-  ];
+const features = [
+  {
+    icon: "⚡",
+    title: "Fast Performance",
+    desc: "Optimized for speed and efficiency across all devices.",
+  },
+  {
+    icon: "🎨",
+    title: "Beautiful Design",
+    desc: "Crafted with attention to detail and modern aesthetics.",
+  },
+  {
+    icon: "🔒",
+    title: "Secure & Reliable",
+    desc: "Enterprise-grade security with 99.9% uptime guarantee.",
+  },
+  {
+    icon: "📱",
+    title: "Fully Responsive",
+    desc: "Perfect experience on mobile, tablet, and desktop.",
+  },
+  {
+    icon: "🚀",
+    title: "Easy to Scale",
+    desc: "Grows with your business from day one.",
+  },
+  {
+    icon: "💬",
+    title: "24/7 Support",
+    desc: "Our team is always here to help you succeed.",
+  },
+];
+
+export default function HomePage() {
+  const [stats, setStats] = useState<AnalyticStat[]>([]);
+
+  const fetchData = async () => {
+    const data = await getAnalytic();
+    setStats(data.data.stats);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className="bg-white">
