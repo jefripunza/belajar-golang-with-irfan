@@ -1,50 +1,27 @@
 import { useEffect, useState } from "react";
 import { getAnalytic } from "@/services/analytic.service";
 import type { AnalyticStat } from "@/types/analytic";
-
-const features = [
-  {
-    icon: "⚡",
-    title: "Fast Performance",
-    desc: "Optimized for speed and efficiency across all devices.",
-  },
-  {
-    icon: "🎨",
-    title: "Beautiful Design",
-    desc: "Crafted with attention to detail and modern aesthetics.",
-  },
-  {
-    icon: "🔒",
-    title: "Secure & Reliable",
-    desc: "Enterprise-grade security with 99.9% uptime guarantee.",
-  },
-  {
-    icon: "📱",
-    title: "Fully Responsive",
-    desc: "Perfect experience on mobile, tablet, and desktop.",
-  },
-  {
-    icon: "🚀",
-    title: "Easy to Scale",
-    desc: "Grows with your business from day one.",
-  },
-  {
-    icon: "💬",
-    title: "24/7 Support",
-    desc: "Our team is always here to help you succeed.",
-  },
-];
+import { getFeatures } from "@/services/feature.service";
+import type { Feature } from "@/types/feature";
 
 export default function HomePage() {
   const [stats, setStats] = useState<AnalyticStat[]>([]);
+  const [features, setFeatures] = useState<Feature[]>([]);
 
   const fetchData = async () => {
-    const data = await getAnalytic();
-    setStats(data.data.stats);
+    const features = await getFeatures();
+    const stats = await getAnalytic();
+
+    setFeatures(features);
+    setStats(stats);
   };
 
   useEffect(() => {
+    console.log("Buka HomePage"); // componentDidMount & onMount
     fetchData();
+    return () => {
+      console.log("Tutup HomePage"); // componentDidUnmount & onUnmount
+    };
   }, []);
 
   return (
@@ -123,7 +100,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-gray-900 font-semibold mb-2">{f.title}</h3>
                 <p className="text-gray-500 text-sm leading-relaxed">
-                  {f.desc}
+                  {f.description}
                 </p>
               </div>
             ))}
