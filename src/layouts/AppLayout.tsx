@@ -23,10 +23,14 @@ export default function AppLayout() {
       const valid = await validateToken("app");
       if (!valid) {
         navigate("/login", { replace: true });
+      } else {
+        if (location.pathname === "/app") {
+          navigate("/app/dashboard", { replace: true });
+        }
       }
     };
     checkAuth();
-  }, [validateToken, navigate]);
+  }, [validateToken, navigate, location.pathname]);
 
   useEffect(() => {
     const mq = window.matchMedia("(min-width: 1024px)"); // lg
