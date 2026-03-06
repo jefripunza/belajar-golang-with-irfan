@@ -4,12 +4,16 @@ import { RouterProvider } from "react-router/dom";
 
 import "@/index.css";
 
+// Layouts
 import AppLayout from "@/layouts/AppLayout";
+
+// Pages
 import AppPage from "@/pages/HomePage";
 import AboutPage from "@/pages/AboutPage";
-
-// Placeholder pages
 import PlaceholderPage from "@/pages/PlaceholderPage";
+
+// Error
+import NotFoundPage from "@/pages/error/NotFoundPage";
 
 const router = createBrowserRouter([
   {
@@ -26,18 +30,10 @@ const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-6xl font-extrabold text-gray-200 mb-4">404</h1>
-          <p className="text-gray-500 text-lg">Page not found</p>
-          <a href="/" className="mt-6 inline-block text-violet-600 hover:underline font-medium">← Back to Home</a>
-        </div>
-      </div>
-    ),
+    element: <NotFoundPage />,
   },
 ]);
 
 createRoot(document.getElementById("root")!).render(
-  <RouterProvider router={router} />
+  <RouterProvider router={router} />,
 );
