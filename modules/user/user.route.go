@@ -1,11 +1,16 @@
 package user
 
 import (
-	"belajar-golang-uhuy/middlewares"
-
 	"github.com/gofiber/fiber/v2"
 )
 
-func Route(api fiber.Router) {
-	api.Get("/me", middlewares.UseToken, GetMe)
+func ProtectedRoute(api fiber.Router) {
+	api.Get("/me", GetMe)
+}
+
+// TODO: Management
+func ManagementRoute(api fiber.Router) {
+	api.Get("/manage/all", GetAllUsers)
+	api.Put("/manage/:id", EditUser)
+	api.Delete("/manage/:id", RemoveUser)
 }
