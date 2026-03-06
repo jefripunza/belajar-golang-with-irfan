@@ -1,10 +1,13 @@
 package example
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"belajar-golang-uhuy/dto"
+
+	"github.com/gofiber/fiber/v2"
+)
 
 func HelloWorld(c *fiber.Ctx) error {
-	return c.Render("index", fiber.Map{
-		"Title": "Hello, World!",
-	}, "layouts/main")
-	// aku ngubah disini juga
+	return dto.OK(c, "Hello, World!", fiber.Map{
+		"Title": "App Name",
+	})
 }

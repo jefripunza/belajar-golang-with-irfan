@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:go": "go build -o app main.go",
     "lint": "eslint .",
     "preview": "vite preview"
   },

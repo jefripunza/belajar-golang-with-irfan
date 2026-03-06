@@ -8,8 +8,9 @@ import (
 )
 
 func Routes(app fiber.Router) {
-	api := app.Group("/api")
-
 	example.Route(app)
+
+	api := app.Group("/api")
 	testimony.Route(api.Group("/testimony"))
+
 }
