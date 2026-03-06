@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
-import { login } from "@/services/auth.service";
 import type { AxiosError } from "axios";
+import { useAuthStore } from "@/stores/authStore";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,6 +11,8 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const { login } = useAuthStore();
+
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
@@ -18,12 +20,12 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const token = await login({ username, password });
-
-      // Simpan token (sesuaikan storage strategy dengan kebutuhan project)
-      localStorage.setItem("token", token);
-
-      navigate("/app", { replace: true }); // sesuaikan redirect tujuan
+      const result = await login(username, password);
+      if (result.success) {
+        navigate("/app", { replace: true }); // sesuaikan redirect tujuan
+      } else {
+        setError(result.message || "Login failed");
+      }
     } catch (err) {
       const axiosError = err as AxiosError<{ message?: string }>;
       const message =
