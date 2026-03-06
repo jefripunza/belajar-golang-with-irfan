@@ -1,9 +1,38 @@
 import { useState } from "react";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
+import { login } from "@/services/auth.service";
+import type { AxiosError } from "axios";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [remember, setRemember] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
+    setError(null);
+    setIsLoading(true);
+
+    try {
+      const token = await login({ email, password });
+
+      // Simpan token (sesuaikan storage strategy dengan kebutuhan project)
+      localStorage.setItem("token", token);
+
+      navigate("/dashboard"); // sesuaikan redirect tujuan
+    } catch (err) {
+      const axiosError = err as AxiosError<{ message?: string }>;
+      const message =
+        axiosError?.response?.data?.message ?? "Login failed. Please try again.";
+      setError(message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="w-full max-w-md">
@@ -37,6 +66,13 @@ export default function LoginPage() {
 
         {/* Form */}
         <div className="space-y-4">
+          {/* Error Message */}
+          {error && (
+            <div className="px-4 py-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-600">
+              {error}
+            </div>
+          )}
+
           {/* Email */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1.5">
@@ -47,6 +83,8 @@ export default function LoginPage() {
               <input
                 type="email"
                 placeholder="john@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl text-sm text-gray-800 placeholder-gray-300 focus:outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 transition-all"
               />
             </div>
@@ -68,6 +106,8 @@ export default function LoginPage() {
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full pl-10 pr-12 py-3 border border-gray-200 rounded-xl text-sm text-gray-800 placeholder-gray-300 focus:outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-100 transition-all"
               />
               <button
@@ -99,8 +139,12 @@ export default function LoginPage() {
           </label>
 
           {/* Submit */}
-          <button className="w-full py-3.5 bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-semibold rounded-xl hover:from-violet-700 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-all duration-200 text-sm mt-2">
-            Sign In →
+          <button
+            onClick={handleSubmit}
+            disabled={isLoading}
+            className="w-full py-3.5 bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-semibold rounded-xl hover:from-violet-700 hover:to-indigo-700 shadow-lg hover:shadow-xl transition-all duration-200 text-sm mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            {isLoading ? "Signing in..." : "Sign In →"}
           </button>
         </div>
       </div>
