@@ -3,7 +3,6 @@ import { Outlet } from "react-router";
 import Sidebar from "@/layouts/partials/Sidebar";
 import { useNavigate, useLocation } from "react-router";
 import { useAuthStore } from "@/stores/authStore";
-import { useThemeStore } from "@/stores/themeStore";
 import Loading from "@/components/Loading";
 
 export default function AppLayout() {
@@ -13,10 +12,10 @@ export default function AppLayout() {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const { isLoading, validateToken, logout } = useAuthStore();
-  const { isDarkMode, toggleTheme } = useThemeStore();
+  const { isLoading, validateToken} = useAuthStore();
+  // const { isDarkMode, toggleTheme } = useThemeStore();
 
-  const [isDesktop, setIsDesktop] = useState(false);
+  // const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -36,7 +35,7 @@ export default function AppLayout() {
     const mq = window.matchMedia("(min-width: 1024px)"); // lg
     const apply = () => {
       const nextIsDesktop = mq.matches;
-      setIsDesktop(nextIsDesktop);
+      // setIsDesktop(nextIsDesktop);
       if (!nextIsDesktop) {
         setCollapsed(false);
       }
@@ -47,24 +46,24 @@ export default function AppLayout() {
     return () => mq.removeEventListener("change", apply);
   }, [setCollapsed]);
 
-  useEffect(() => {
-    const root = document.documentElement;
-    if (isDarkMode) {
-      root.removeAttribute("data-theme");
-    } else {
-      root.setAttribute("data-theme", "light");
-    }
-  }, [isDarkMode]);
+  // useEffect(() => {
+  //   const root = document.documentElement;
+  //   if (isDarkMode) {
+  //     root.removeAttribute("data-theme");
+  //   } else {
+  //     root.setAttribute("data-theme", "light");
+  //   }
+  // }, [isDarkMode]);
 
-  const handleLogout = () => {
-    logout();
-    navigate("/", { replace: true });
-  };
+  // const handleLogout = () => {
+  //   logout();
+  //   navigate("/", { replace: true });
+  // };
 
-  const handleNavClick = (path: string) => {
-    navigate(path);
-    setMobileOpen(false);
-  };
+  // const handleNavClick = (path: string) => {
+  //   navigate(path);
+  //   setMobileOpen(false);
+  // };
 
   if (isLoading) {
     return <Loading />;

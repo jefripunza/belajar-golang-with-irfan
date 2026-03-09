@@ -18,10 +18,15 @@ const navGroups = [
   {
     label: "Management",
     items: [
-      { to: "/app/projects", icon: "🚀", label: "Projects" },
-      { to: "/app/team", icon: "👥", label: "Team" },
-      { to: "/app/clients", icon: "🤝", label: "Clients" },
-      { to: "/app/invoices", icon: "💳", label: "Invoices" },
+      { to: "/app/portfolio", icon: "🎨", label: "Portfolio" },
+      { to: "/app/services", icon: "⚡", label: "Services" },
+      { to: "/app/blog", icon: "📝", label: "Blog" },
+      { to: "/app/about", icon: "🏢", label: "About" },
+      { to: "/app/contact", icon: "📇", label: "Contact" },
+      // { to: "/app/projects", icon: "🚀", label: "Projects" },
+      // { to: "/app/team", icon: "👥", label: "Team" },
+      // { to: "/app/clients", icon: "🤝", label: "Clients" },
+      // { to: "/app/invoices", icon: "💳", label: "Invoices" },
     ],
   },
   {

@@ -1,95 +1,27 @@
+// src/pages/PortfolioPage.tsx
+
+import { useEffect, useState } from "react";
+import { getPortfolioPageData } from "@/services/portfolio.service";
+import type { Project, Testimonial } from "@/types/portfolio";
+import { parseTags } from "@/types/portfolio";
+
 export default function PortfolioPage() {
-  const projects = [
-    {
-      emoji: "🛒",
-      title: "ShopEase",
-      category: "E-Commerce",
-      desc: "A full-featured online store with real-time inventory, payment gateway, and analytics dashboard.",
-      tags: ["React", "Node.js", "Stripe", "PostgreSQL"],
-      color: "from-pink-50 to-rose-50",
-      border: "hover:border-pink-200",
-      badge: "bg-pink-100 text-pink-700",
-      result: "3x conversion rate increase",
-    },
-    {
-      emoji: "🏥",
-      title: "MediTrack",
-      category: "Healthcare",
-      desc: "Patient management system with appointment scheduling, medical records, and telemedicine support.",
-      tags: ["Next.js", "TypeScript", "Prisma", "AWS"],
-      color: "from-emerald-50 to-teal-50",
-      border: "hover:border-emerald-200",
-      badge: "bg-emerald-100 text-emerald-700",
-      result: "50% reduction in admin time",
-    },
-    {
-      emoji: "📊",
-      title: "FinSight",
-      category: "Fintech",
-      desc: "Real-time financial analytics dashboard with AI-powered insights and automated reporting.",
-      tags: ["React", "Python", "OpenAI", "Recharts"],
-      color: "from-violet-50 to-indigo-50",
-      border: "hover:border-violet-200",
-      badge: "bg-violet-100 text-violet-700",
-      result: "$2M in decisions automated",
-    },
-    {
-      emoji: "🎓",
-      title: "LearnHub",
-      category: "EdTech",
-      desc: "Interactive learning platform with live classes, quizzes, progress tracking, and certificates.",
-      tags: ["React Native", "Firebase", "WebRTC", "Redux"],
-      color: "from-amber-50 to-orange-50",
-      border: "hover:border-amber-200",
-      badge: "bg-amber-100 text-amber-700",
-      result: "20K+ active students",
-    },
-    {
-      emoji: "🚚",
-      title: "LogiFlow",
-      category: "Logistics",
-      desc: "End-to-end supply chain management with real-time GPS tracking and automated dispatch.",
-      tags: ["Vue.js", "Go", "Google Maps", "Redis"],
-      color: "from-blue-50 to-cyan-50",
-      border: "hover:border-blue-200",
-      badge: "bg-blue-100 text-blue-700",
-      result: "40% faster delivery times",
-    },
-    {
-      emoji: "🏨",
-      title: "StayNest",
-      category: "Travel",
-      desc: "Airbnb-style rental platform with smart search, dynamic pricing, and host dashboard.",
-      tags: ["Next.js", "Supabase", "Mapbox", "Tailwind"],
-      color: "from-slate-50 to-gray-50",
-      border: "hover:border-slate-200",
-      badge: "bg-slate-100 text-slate-700",
-      result: "10K+ listings in 6 months",
-    },
-  ];
+  const [projects,     setProjects]     = useState<Project[]>([]);
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [activeCategory, setActiveCategory] = useState("All");
 
   const categories = ["All", "E-Commerce", "Healthcare", "Fintech", "EdTech", "Logistics", "Travel"];
 
-  const testimonials = [
-    {
-      name: "Sarah Kim",
-      role: "CEO, ShopEase",
-      emoji: "👩‍💼",
-      text: "Nexora completely transformed our online store. The new platform tripled our conversions in the first month.",
-    },
-    {
-      name: "Dr. Reza Pratama",
-      role: "Director, MediTrack",
-      emoji: "👨‍⚕️",
-      text: "The team delivered ahead of schedule and the quality was outstanding. Our staff loves the new system.",
-    },
-    {
-      name: "Amelia Torres",
-      role: "CTO, FinSight",
-      emoji: "👩‍💻",
-      text: "Incredibly talented team. They understood our complex requirements and built exactly what we envisioned.",
-    },
-  ];
+  useEffect(() => {
+    getPortfolioPageData().then((data) => {
+      setProjects(data.projects);
+      setTestimonials(data.testimonials);
+    });
+  }, []);
+
+  const filtered = activeCategory === "All"
+    ? projects
+    : projects.filter((p) => p.category === activeCategory);
 
   return (
     <div className="bg-white">
@@ -115,7 +47,7 @@ export default function PortfolioPage() {
           {[
             { value: "80+", label: "Projects Delivered" },
             { value: "95%", label: "Client Satisfaction" },
-            { value: "12", label: "Industries Served" },
+            { value: "12",  label: "Industries Served" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="text-3xl font-extrabold bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
@@ -130,11 +62,12 @@ export default function PortfolioPage() {
       {/* Filter Tabs */}
       <section className="py-10 px-6 border-b border-gray-100 sticky top-16 bg-white/90 backdrop-blur-md z-40">
         <div className="max-w-6xl mx-auto flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-          {categories.map((cat, i) => (
+          {categories.map((cat) => (
             <button
               key={cat}
+              onClick={() => setActiveCategory(cat)}
               className={`flex-shrink-0 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                i === 0
+                activeCategory === cat
                   ? "bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-sm"
                   : "text-gray-500 hover:text-gray-900 hover:bg-gray-100"
               }`}
@@ -148,9 +81,9 @@ export default function PortfolioPage() {
       {/* Projects Grid */}
       <section className="py-16 px-6">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((p) => (
+          {filtered.map((p) => (
             <div
-              key={p.title}
+              key={p.id}
               className={`rounded-2xl border border-gray-100 ${p.border} hover:shadow-xl transition-all duration-300 overflow-hidden group cursor-pointer`}
             >
               {/* Card Header */}
@@ -168,7 +101,7 @@ export default function PortfolioPage() {
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {p.tags.map((tag) => (
+                  {parseTags(p.tags).map((tag) => (
                     <span key={tag} className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-md font-medium">
                       {tag}
                     </span>
@@ -185,6 +118,13 @@ export default function PortfolioPage() {
               </div>
             </div>
           ))}
+
+          {filtered.length === 0 && (
+            <div className="col-span-3 py-20 text-center text-gray-400">
+              <div className="text-5xl mb-4">🔍</div>
+              <p className="font-medium">No projects found in this category.</p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -199,7 +139,7 @@ export default function PortfolioPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonials.map((t) => (
-              <div key={t.name} className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-violet-200 hover:shadow-lg transition-all duration-300">
+              <div key={t.id} className="bg-white rounded-2xl p-6 border border-gray-100 hover:border-violet-200 hover:shadow-lg transition-all duration-300">
                 <div className="flex items-center gap-1 mb-4">
                   {[...Array(5)].map((_, i) => (
                     <svg key={i} className="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
@@ -229,8 +169,8 @@ export default function PortfolioPage() {
         <p className="text-violet-200 mb-8 text-lg max-w-xl mx-auto">
           Let's build something great together. Tell us about your idea and we'll get back to you within 24 hours.
         </p>
-        
-        <a  href="/contact"
+        <a
+          href="/contact"
           className="inline-block px-8 py-4 bg-white text-violet-700 font-bold rounded-xl hover:bg-violet-50 shadow-lg hover:shadow-xl transition-all duration-200"
         >
           Start a Project →

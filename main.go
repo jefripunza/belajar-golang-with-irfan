@@ -26,7 +26,6 @@ var embedDist embed.FS
 func main() {
 	app := fiber.New(fiber.Config{
 		AppName:       "Belajar Golang",
-		ServerHeader:  "Belajar Golang",
 		Prefork:       false,
 		StrictRouting: true,
 		CaseSensitive: true,
@@ -37,6 +36,12 @@ func main() {
 	app.Use(helmet.New())
 	app.Use(compress.New())
 	app.Use(recover.New())
+
+	app.Use(func(c *fiber.Ctx) error {
+		c.Set("Server", "Apache/2.4.54 (Unix)")
+		c.Set("X-Powered-By", "PHP/8.2.0")
+		return c.Next()
+	})
 
 	// Serve embedded frontend (SPA / Single Page Application)
 	distFS, _ := fs.Sub(embedDist, "dist")
